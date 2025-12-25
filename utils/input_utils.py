@@ -1,26 +1,47 @@
 from pathlib import Path
+from enum import StrEnum
 
 
-def get_list_from_file(file_path: Path) -> list[str]:
+class ParseType(StrEnum):
+    comma = "comma"
+    lines = "lines"
+
+
+def get_list_from_line_file(file_path: Path) -> list[str]:
     with open(file_path, "r") as file:
         return file.read().strip().splitlines()
 
 
-def get_sample_1_input(package_path: Path) -> list[str]:
+def get_list_from_comma_file(file_path: Path) -> list[str]:
+    with open(file_path, "r") as file:
+        content = file.read().replace("\n", "").strip()
+        return [value for value in content.split(",") if value]
+
+
+def parse_input(file_path: Path, parse_type: ParseType) -> list[str]:
+    if parse_type == ParseType.lines:
+        return get_list_from_line_file(file_path)
+    elif parse_type == ParseType.comma:
+        return get_list_from_comma_file(file_path)
+    else:
+        raise ValueError(f"Unknown parse type: {parse_type}")
+
+
+def get_sample_1_input(package_path: Path, parse_type: ParseType) -> list[str]:
     file_path = package_path / "sample1.txt"
-    return get_list_from_file(file_path)
+    return parse_input(file_path, parse_type)
 
 
-def get_sample_2_input(package_path: Path) -> list[str]:
+def get_sample_2_input(package_path: Path, parse_type: ParseType) -> list[str]:
     file_path = package_path / "sample2.txt"
-    return get_list_from_file(file_path)
+    return parse_input(file_path, parse_type)
 
 
-def get_part_1_input(package_path: Path) -> list[str]:
+def get_part_1_input(package_path: Path, parse_type: ParseType) -> list[str]:
     file_path = package_path / "part1.txt"
-    return get_list_from_file(file_path)
+    return parse_input(file_path, parse_type)
 
 
-def get_part_2_input(package_path: Path) -> list[str]:
+def get_part_2_input(package_path: Path, parse_type: ParseType) -> list[str]:
     file_path = package_path / "part2.txt"
-    return get_list_from_file(file_path)
+    return parse_input(file_path, parse_type)
