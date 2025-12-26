@@ -5,6 +5,7 @@ from enum import StrEnum
 class ParseType(StrEnum):
     comma = "comma"
     lines = "lines"
+    matrix = "matrix"
 
 
 def get_list_from_line_file(file_path: Path) -> list[str]:
@@ -18,11 +19,19 @@ def get_list_from_comma_file(file_path: Path) -> list[str]:
         return [value for value in content.split(",") if value]
 
 
+def get_matrix_from_file(file_path: Path) -> list[list[str]]:
+    with open(file_path, "r") as file:
+        lines = file.read().strip().splitlines()
+        return [list(line) for line in lines]
+
+
 def parse_input(file_path: Path, parse_type: ParseType) -> list[str]:
     if parse_type == ParseType.lines:
         return get_list_from_line_file(file_path)
     elif parse_type == ParseType.comma:
         return get_list_from_comma_file(file_path)
+    elif parse_type == ParseType.matrix:
+        return get_matrix_from_file(file_path)
     else:
         raise ValueError(f"Unknown parse type: {parse_type}")
 
