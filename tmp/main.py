@@ -1,4 +1,5 @@
 from utils.input_utils import (
+    ParseType,
     get_sample_1_input,
     get_part_2_input,
     get_part_1_input,
@@ -10,13 +11,13 @@ PACKAGE_PATH = Path(__file__).parent
 
 
 def part_one():
-    sample_input = get_part_1_input(PACKAGE_PATH)
-    print(sample_input)
+    inputs = get_sample_1_input(PACKAGE_PATH, ParseType.comma)
+    print(inputs)
 
 
 def part_two():
-    sample_input = get_part_2_input(PACKAGE_PATH)
-    print(sample_input)
+    inputs = get_sample_2_input(PACKAGE_PATH, ParseType.comma)
+    print(inputs)
 
 
 if __name__ == "__main__":
