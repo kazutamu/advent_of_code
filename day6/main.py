@@ -24,13 +24,40 @@ def part_one():
     return sum(values)
 
 
+def transform(inputs: list[str]) -> list[str]:
+    result: list[str] = []
+    result.append("")
+    for j in range(len(inputs[0]) - 1, -1, -1):
+        for i in range(len(inputs)):
+            char = inputs[i][j]
+            result[-1] += inputs[i][j]
+            if char in ["+", "*"]:
+                result.append("")
+
+    return result
+
+
 def part_two():
-    inputs = get_sample_2_input(PACKAGE_PATH, ParseType.lines)
-    print(inputs)
+    inputs = get_part_2_input(PACKAGE_PATH, ParseType.lines)
+    str_list = transform(inputs)
+    total = 0
+    for s in str_list:
+        if len(s) == 0:
+            continue
+        op = s[-1]
+        values = [int(value) for value in s[:-1].strip().split()]
+        if op == "+":
+            total += sum(values)
+        elif op == "*":
+            product = 1
+            for v in values:
+                product *= v
+            total += product
+    return total
 
 
 if __name__ == "__main__":
-    print("Part One:")
-    print(part_one())
-    # print("Part Two:")
-    # part_two()
+    # print("Part One:")
+    # print(part_one())
+    print("Part Two:")
+    print(part_two())

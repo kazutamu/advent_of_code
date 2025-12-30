@@ -11,7 +11,7 @@ class ParseType(StrEnum):
 
 def get_list_from_line_file(file_path: Path) -> list[str]:
     with open(file_path, "r") as file:
-        return file.read().strip().splitlines()
+        return file.read().splitlines()
 
 
 def get_list_from_comma_file(file_path: Path) -> list[str]:
